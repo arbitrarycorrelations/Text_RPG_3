@@ -24,7 +24,7 @@ Combat is turn-based. During a combat cycle, you can attack, use a spell, use an
 ⋆Name: The spell's name.
 ⋆Damage: How much damage the spell will do.
 ⋆Cost: How much MP the spell costs to use.
-⋆Kind: The type of defense the spell is measured against (Defense or Resistance)\n[M: Magic -- Against RES \\\ P: Physical -- Against DEF].
+⋆Kind: The type of defense the spell is measured against (Defense or Resistance) [M: Magic -- Against RES \\\ P: Physical -- Against DEF].
 ⋆Affliction: The state that the spell has a chance to set.
 
 ✦Basic Game Info✦
