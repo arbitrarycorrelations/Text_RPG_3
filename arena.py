@@ -137,7 +137,7 @@ def arena():
                 if cycle_complete == True:
                     raise EnemyAttack
                 current_fighter = players.party[fighter_index]
-                action = int(input(f"\nWhat will {current_fighter.name} do?\n1: Attack\n2: Use magic 3: Bag\n4: Concede\n>\t"))
+                action = int(input(f"\nWhat will {current_fighter.name} do?\n1: Attack\n2: Use magic\n3: Bag\n4: Concede\n>\t"))
                 if action not in range(1,5):
                     raise range_error
             except (ValueError, range_error):
