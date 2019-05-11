@@ -3,6 +3,8 @@
 
 Tested with Python 3.6.1 and above. Instructions for downloading and installing Python can be found at www.python.org/
 
+DISCLAIMER: The game is wildly unbalanced.
+
 Game Rules:
 
 The rules of the game are as follows:
