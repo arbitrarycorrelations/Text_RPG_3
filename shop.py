@@ -37,7 +37,7 @@ def shop():
                             break
             elif switch == 2:
                 dol = {1: items.potions, 2: items.ethers}
-                browse_detail = int(input("\nBrowse what type of items?\n1: Health Potions\n2: Ethers\nD:\tDon't browse\n>\t"))
+                browse_detail = int(input("\nBrowse what type of items?\n1: Health Potions\n2: Ethers\nD: Don't browse\n>\t"))
                 if browse_detail not in {1,2}:
                     raise RangeError
                 else: 
@@ -86,13 +86,17 @@ def purchase_w(weapon):
                 print(f"Party has {players.protag.credits} credits left.")
                 shop()
         except ValueError:
-            if char.capitalize() not in {'S', 'D'}: print("That option doesn't exist.") ; continue
-            else:
-                if char.capitalize() == 'S': 
-                    stat_view = int(input(f"\nView whose stats?\n{efuncs.pretty_print(players.party)}\n>\t"))
-                    chars_d[stat_view].print_stats()
-                elif char.capitalize() == 'D':
-                    shop()
+            try:
+                if char.capitalize() not in {'S', 'D'}: print("That option doesn't exist.") ; continue
+                else:
+                    if char.capitalize() == 'S': 
+                        stat_view = int(input(f"\nView whose stats?\n{efuncs.pretty_print(players.party)}\n>\t"))
+                        chars_d[stat_view].print_stats()
+                    elif char.capitalize() == 'D':
+                        shop()
+            except ValueError:
+                print("Invalid input.")
+                continue
         except KeyError:
             print("\nThat isn't an option.")
             continue

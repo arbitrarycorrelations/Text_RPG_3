@@ -131,7 +131,7 @@ def nav():
         except (ValueError, IndexError): 
             print("Not a choice.")
             continue 
-
+    
 def list_print(listattr):
     blocks = ''
     for item in listattr:
@@ -153,13 +153,19 @@ def make_temp_dictionary(listattr):
         dictattr[iteration+1] = item
     return dictattr
 
+def detail_print(listattr):
+    attrprint = ''
+    for iteration, item in enumerate(listattr):
+        attrprint = attrprint + f"{str(iteration + 1)}: {item.detail_str()}\n"
+    return attrprint
+
 def recruit(player):
     if player in players.party:
         nav()
     else:
         while True:
             try:
-                accept_deny = int(input(f"{player.name} would like to join your party.\n1: Accept\n2: Deny\n>\t"))
+                accept_deny = int(input(f"{player.detail_str()} would like to join your party.\n1: Accept\n2: Deny\n>\t"))
                 if accept_deny not in {1,2}: raise ValueError
                 elif accept_deny == 1: 
                     players.add_to_party(player)
@@ -214,8 +220,8 @@ def learn_spell(player):
         spells_temp = make_temp_dictionary(filtered_stl)
         while True:
             try:
-                spell_choice = input(f"\nWhich spell should {player.name} learn?\n{pretty_print(filtered_stl)}\nI: View spell info\nD: Don't learn a spell\n>\t")
-                if spell_choice in {'i', 'I', 'd', 'D'}:
+                spell_choice = input(f"\nWhich spell should {player.name} learn?\n{detail_print(filtered_stl)}\nD: Don't learn a spell\n>\t")
+                if spell_choice in {'d', 'D'}:
                     raise string_exception
                 else:
                     spell_choice = int(spell_choice)
@@ -235,14 +241,7 @@ def learn_spell(player):
                 print("Invalid choice.")
                 continue
             except string_exception:
-                if spell_choice in {'i', 'I'}:
-                    spell_detail = int(input(f"\nView which spell's details?\n{pretty_print(filtered_stl)}\n>\t"))
-                    if spell_detail not in spells_temp.keys():
-                        print("\nNot an option.")
-                        continue 
-                    else:
-                        detailed_spell_view(spells_temp[spell_detail])
-                elif spell_choice in {'d', 'D'}:
+                if spell_choice in {'d', 'D'}:
                     home()
     else: 
         print(f"\n{player.name} can't learn any spells right now.")

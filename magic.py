@@ -9,6 +9,9 @@ class Heal():
         self.cost = cost
         self.heals = heals
         self.level = level
+    def detail_str(self):
+        detail = f"{self.name} (Heals: {self.heals}, Cost: {self.cost})"
+        return detail
 class Buff():
     name = ''
     cost = 0
@@ -23,6 +26,9 @@ class Buff():
         self.duration = duration
         self.level = level
         self.value_buffer = value_buffer
+    def detail_str(self):
+        detail = f"{self.name} (Cost: {self.cost}, Attack Boost: {self.atkadd}, Duration: {self.duration})"
+        return detail
 class Boost_Magic():
     name = ''
     cost = 0
@@ -39,6 +45,9 @@ class Boost_Magic():
         self.duration = duration
         self.level 
         self.value_buffer = value_buffer
+    def detail_str(self):
+        detail = f"Name: {self.name} (Cost: {self.cost}, Attribute Boosted: {self.attr_to_boost}, Boost Amount: {self.boost_amt}, Duration: {self.duration})"
+        return detail
 
 healI = Heal('Heal I', 5, 50, 0)
 healII = Heal('Heal II', 7, 80, 3)
@@ -76,6 +85,9 @@ class attack_spell():
         self.affliction = affliction 
         self.level = level
         self.aoe = aoe
+    def detail_str(self):
+        detail = f"{self.name} (Damage: {self.damage}, Cost: {self.cost}, Kind: {self.kind}, Affliction: {self.affliction.name})"
+        return detail
 
 raze1 = attack_spell('Raze I', 15, 7, 'P', states.normal, 5, False)
 raze2 = attack_spell('Raze II', 30, 15, 'P', states.normal, 8, False)

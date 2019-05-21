@@ -13,7 +13,6 @@ class EnemyAttack(Exception): pass
 def arena():
     fighter_index = 0
     turns = 0
-    first_turn = True
     cycle_complete = False
     dead_players = []
     while True:
@@ -42,14 +41,28 @@ def arena():
             while True:
                 #Fights enemies
                 enemy_dict = efuncs.make_temp_dictionary(players.enemies)
-                try:
-                    opponent = int(input(f"\nFight which enemy?\n{efuncs.pretty_print(players.enemies)}\n>\t"))
+                opponent = input(f"\nFight which enemy?\n{efuncs.pretty_print(players.enemies)}\nS: View Enemy Stats\nD: Don't fight an enemy\n>\t")
+                try:  
+                    if opponent in {'s', 'S', 'd', 'D'}: raise string_exception
+                    opponent = int(opponent)
                     active_opponent = enemy_dict[opponent]
-                    active_opponent.print_enemy_stats()
                     break
                 except (KeyError, ValueError):
                     print("Invalid choice.")
                     continue
+                except string_exception:
+                    if opponent in {'s', 'S'}: 
+                        try:
+                            view_stats = int(input(f"\nView the stats of which enemy?\n{efuncs.pretty_print(players.enemies)}\n>\t"))
+                            enemy_dict[view_stats].print_enemy_stats()
+                        except (ValueError, KeyError):
+                            print("Not an option.")
+                            continue
+                    elif opponent in {'d', 'D'}:
+                        arena()
+                    else:
+                        print("Not an option.")
+                        continue
         elif boss_or_enemy  == 2:
             while True:
                 #Fights boss/superboss
@@ -60,15 +73,29 @@ def arena():
                     print("Party will fight superbosses.")
                 else: boss_list = players.bosses
                 boss_dict = efuncs.make_temp_dictionary(boss_list)
+                opponent = input(f"\nFight which boss?\n{efuncs.pretty_print(boss_list)}\nS: View Boss Stats\nD: Don't fight a boss\n>\t")
                 try:
-                    opponent = int(input(f"\nFight which boss?\n{efuncs.pretty_print(boss_list)}\n>\t"))
+                    if opponent in {'s', 'S', 'd', 'D'}: raise string_exception
+                    opponent = int(opponent)
                     active_opponent = boss_dict[opponent]
-                    active_opponent.print_boss_stats()
                     break
                 except (KeyError, ValueError):
                     print("Invalid choice.")
                     continue 
-        print("--COMBAT START--")
+                except string_exception:
+                    if opponent in {'s', 'S'}: 
+                        try:
+                            view_stats = int(input(f"\nView the stats of which boss?\n{efuncs.pretty_print(boss_list)}\n>\t"))
+                            boss_dict[view_stats].print_enemy_stats()
+                        except (ValueError, KeyError):
+                            print("Not an option.")
+                            continue
+                    elif opponent in {'d', 'D'}:
+                        arena()
+                    else:
+                        print("Not an option.")
+                        continue
+        print("\n--COMBAT START--")
         while True:
             looprun = False
             totalhealth = 0
@@ -150,8 +177,20 @@ def arena():
             except EnemyAttack: 
                 #Enemy attack 
                 chosen_enemy_target = players.party[random.randint(0, (len(players.party)-1))]
-                will_use_magic = random.randint(4,10)
-                if will_use_magic in {8,9,10}:
+                will_use_magic = random.randint(6,10)
+                if will_use_magic in {8,9,10} and len(active_opponent.spells) != 0:
+                    opponent_heal_spells = []
+                    opponent_other_spells = []
+                    for item in active_opponent.spells:
+                        if isinstance(item, (magic.attack_spell, magic.Buff, magic.Boost_Magic)): opponent_other_spells.append(item)
+                        elif isinstance(item, magic.Heal): opponent_heal_spells.append(item)
+                    if active_opponent.currenthealth <= (active_opponent.maxhealth * .40):
+                        spell_to_use = random.choice(opponent_heal_spells)
+                        active_opponent.enemy_use_magic('', spell_to_use)
+                    else:
+                        spell_to_use = random.choice(opponent_other_spells)
+                        active_opponent.enemy_use_magic(chosen_enemy_target, spell_to_use)
+                    """
                     for iteration, item in enumerate(active_opponent.spells):
                         if isinstance(item, magic.Heal):
                             healindex = iteration
@@ -163,10 +202,7 @@ def arena():
                             active_opponent.enemy_attack(chosen_enemy_target)
                         else:
                             spell_to_use = random.choice((active_opponent.spells[:healindex] + active_opponent.spells[healindex+1:]))
-                            active_opponent.enemy_use_magic(chosen_enemy_target, spell_to_use)
-                    else:
-                        print(f"{active_opponent.name} tried to use a spell, but they don't know any!")
-                        active_opponent.enemy_attack(chosen_enemy_target)
+                            active_opponent.enemy_use_magic(chosen_enemy_target, spell_to_use)"""
                 else:
                     active_opponent.enemy_attack(chosen_enemy_target)
                 cycle_complete = False
@@ -178,7 +214,6 @@ def arena():
                     player.state.turns_active += 1
                     states.check_duration(current_fighter)
                 turns += 1
-                first_turn = False
                 if action == 1:
                     print()
                     current_fighter.player_attack(active_opponent)
@@ -191,8 +226,8 @@ def arena():
                         if looprun == True:
                             break
                         try:
-                            spell_choice = input(f"Use which spell? {current_fighter.name} has {current_fighter.currentmp} MP.\n{efuncs.pretty_print(current_fighter.spells)}\nI: View spell information\nD: Don't use a spell\n>\t")
-                            if spell_choice in {'i', 'I', 'd', 'D'}:
+                            spell_choice = input(f"Use which spell? {current_fighter.name} has {current_fighter.currentmp} MP.\n{efuncs.detail_print(current_fighter.spells)}\nD: Don't use a spell\n>\t")
+                            if spell_choice in {'d', 'D'}:
                                 raise string_exception
                             else:
                                 spell_choice = int(spell_choice)
@@ -200,13 +235,7 @@ def arena():
                             print("Not an option.")
                             continue
                         except string_exception:
-                            if spell_choice in {'i', 'I'}:
-                                if len(current_fighter.spells) <= 0:
-                                    print(f"{current_fighter.name} have no spells to view the information of.")
-                                else:
-                                    current_fighter.view_spells()
-                                continue
-                            elif spell_choice in {'d', 'D'}:
+                            if spell_choice in {'d', 'D'}:
                                 looprun = True
                                 break
                         try:
@@ -214,7 +243,7 @@ def arena():
                             spell = temp_spell_dictionary[spell_choice]
                             if isinstance(spell, (magic.Boost_Magic, magic.Heal, magic.Buff)) == True:
                                 if len(players.party) > 1:
-                                    spelltarg = int(input(f"\nUse spell on:\n{efuncs.pretty_print(players.party)} \n>\t"))
+                                    spelltarg = int(input(f"\nUse spell on:\n{efuncs.detail_print(players.party)}\n>\t"))
                                     fighters = efuncs.make_temp_dictionary(players.party)
                                     if current_fighter.currentmp - spell.cost < 0:
                                         print(f"\n{current_fighter.name} doesn't have enough MP to use that spell.\n")
@@ -226,7 +255,7 @@ def arena():
                                         fighter_index += 1
                                         break
                                 else: 
-                                    if current_fighter.current_fighter - spell.cost < 0:
+                                    if current_fighter.currentmp - spell.cost < 0:
                                         print(f"\n{current_fighter.name} doesn't have enough MP to use that spell.\n")
                                         continue
                                     else:
@@ -253,8 +282,8 @@ def arena():
                         if looprun == True: 
                             break
                         try:
-                            item_choice = input(f"\nUse which item?\n{efuncs.pretty_print(current_fighter.bag)}\nI: View item information\nD: Don't use an item\n>\t")
-                            if item_choice in {'i', 'I', 'd', 'D'}:
+                            item_choice = input(f"\nUse which item?\n{efuncs.detail_print(current_fighter.bag)}\nD: Don't use an item\n>\t")
+                            if item_choice in {'d', 'D'}:
                                 raise string_exception
                             else:
                                 item_choice = int(item_choice)
@@ -271,15 +300,9 @@ def arena():
                         except (ValueError, IndexError, KeyError):
                             print("Invalid choice.")
                             continue
-                        except string_exception:
-                            if item_choice in {'i', 'I'}:
-                                if len(current_fighter.bag) <= 0:
-                                    print("Can't view information of items that don't exist.")
-                                else:
-                                    efuncs.item_detail(current_fighter.bag[item_choice])
-                            elif item_choice in {'d', 'D'}:
-                                looprun = True
-                                break
+                        except string_exception:    
+                            looprun = True
+                            break
                 elif action == 4:
                     if players.protag.credits < 50:
                         print("\nYou can't pay the concede fee!")

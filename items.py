@@ -6,6 +6,9 @@ class Health_Potion():
         self.name = name
         self.increase_amt = increase_amt
         self.cost = cost
+    def detail_str(self):
+        detail = f"{self.name} (Heals: {self.increase_amt})"
+        return detail
     
 health_potion = Health_Potion('Small Health Potion', 20, 50)
 health_potion2 = Health_Potion("Medium Health Potion", 50, 75)
@@ -21,6 +24,9 @@ class Ether():
         self.name = name
         self.increase_amt = increase_amt
         self.cost = cost
+    def detail_str(self):
+        detail = f"{self.name} (Heals: {self.increase_amt})"
+        return detail
 
 ether = Ether("Small Ether", 15, 100)
 ether2 = Ether("Medium Ether", 20, 150)

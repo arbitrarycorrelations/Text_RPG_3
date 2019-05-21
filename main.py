@@ -16,7 +16,7 @@ def startup():
                 continue
             elif landing == 'N':
                 while True:
-                    if os.stat('save.json').st_size > 0 and open('save.json').read() != "Placeholder text":
+                    if os.stat('save.json').st_size > 0 and open('save.json', 'r').read() != "Placeholder text":
                         overwrite = input("There is an existing save game. Would you like to overwrite it? (Y/N)\n>\t")
                         if overwrite.capitalize() not in {'Y', 'N'}: print("Invalid option.") ; continue
                         elif overwrite.capitalize() == 'Y': fresh_start()
@@ -24,7 +24,7 @@ def startup():
                     else: fresh_start()  
             elif landing == 'L': raise LoadGame
         except LoadGame:
-            if open('save.json').read() == "Placeholder text":
+            if open('save.json', 'r').read() == 'Placeholder text':
                 print("No saves found. Starting a new game instead...")
                 fresh_start()
             else:
@@ -50,9 +50,6 @@ def cycle_start(key):
         players.sakura.equip_weapon(weapons.wand)
         #Party is already set for loaded games
         players.add_to_party(players.protag)
-        #players.add_to_party(players.kurita)
-        #players.add_to_party(players.ralf)
-        #players.add_to_party(players.sakura)
         save.save(players.party)
     #Boss weapon assignment
     players.magus.equip_boss_weapon(weapons.moonfall_scythe)

@@ -39,13 +39,13 @@ fisticuffs = Weapon('Fisticuffs', 'F', 0, 0, 'None', 0, 'Fists and feet. Not ver
 ## Player ##
 baseSword = Weapon('Iron Sword', 'D', 20, 5, 'None', 0, 'A makeshift sword good in a pinch.')
 swordII = Weapon('Silver Sword', 'B', 35, 10, 'None', 1200, 'A sword used by knights.')
-lightningSword = Weapon('Lightning Sword', 'A', 40, 40, 'L', 3000, 'A legendary sword forged from lightning. Boosts DEF by 3.')
+lightningSword = Weapon('Lightning Sword', 'A', 60, 40, 'L', 3000, 'A legendary sword forged from lightning. Boosts DEF by 3.')
 
 swords = [baseSword, swordII, lightningSword]
 
 handAxe = Weapon('Hand Axe', 'C', 25, 0, 'None', 0, 'A lumberjack\'s axe.')
 handAxeII = Weapon('Silver Hand Axe', 'A', 45, 18,'None', 1100, 'A battle axe popular with fiends and brigands.')
-lightningAxe = Weapon('Lightning Axe', 'A', 25, 40, 'L', 2920, 'An axe forged from lightning. Boosts ATK by 3.')
+lightningAxe = Weapon('Lightning Axe', 'A', 75, 30, 'L', 2920, 'An axe forged from lightning. Boosts ATK by 3.')
 
 axes = [handAxe, handAxeII, lightningAxe]
 
@@ -57,7 +57,7 @@ polearms = [poleArm, poleArmII, poleArmIII]
 
 wand = Weapon('Wooden Wand', 'D', 10, 25, 'F', 0, "A makeshift wand constructed from a branch.")
 wandII = Weapon('Iron Wand', 'B', 10, 40, 'F', 1850, 'An iron wand used by mages in the Royal Army.')
-wandIII = Weapon('Athena\'s Kiss', 'A', 20, 50, 'F', 5200, 'The wand used by the legendary goddess Athena. Boosts MAG by 5.')
+wandIII = Weapon('Athena\'s Kiss', 'A', 20, 70, 'F', 5200, 'The wand used by the legendary goddess Athena. Boosts MAG by 5.')
 
 wands = [wand, wandII, wandIII]
 
@@ -96,6 +96,7 @@ claws = Weapon("Dactyl Claws", "D", 10, 0, '', 0, "The fierce claws of a Dactyl.
 
 bongo = Weapon("Big Bongo", "C", 12, 2, '', 0, "The bongo drum of a gluttonous drummer.")
 
+#Magic enemies
 imbued_wand = Weapon("Imbued Wand", 'D', 5, 10, '', 0, "A wand imbued with magical strength.")
 
 calmcaster = Weapon("Calmcaster", "C", 10, 15, '', 0, "A soothing wand favored by mages.")

@@ -114,3 +114,4 @@ def load():
                 superboss_objs.append(superbosso)
     players.superbosses_defeated = superboss_objs
     print("Loaded bosses defeated and superbosses defeated.")        
+

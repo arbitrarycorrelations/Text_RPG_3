@@ -144,6 +144,7 @@ Credits: {str(self.credits)}
             enemy.currenthealth -= weak_damage
             print(f"{enemy.name.title()}\'s health is now {enemy.currenthealth}.")
     def equip_weapon(self, weapon):
+        current_weapon = self.weapon
         if weapon.name == 'Athena\'s Kiss':
             print(f"{self.name} equips {weapon.name}. They feel their MAG strengthen.")
             self.basemagic += 5
@@ -156,6 +157,12 @@ Credits: {str(self.credits)}
         if weapon.name == 'Lightning Axe':
             print(f"{self.name} equips {weapon.name}. They feel like they can deliver stronger blows to the enemy.")
             self.baseattack += 3
+        names_vals = {'Athena\'s Kiss': (self.basemagic, 5), 'Draco\'s Polearm': (self.speed, 5), 'Lightning Sword': (self.defense, 3), 'Lightning Axe': (self.baseattack, 3)}
+        if current_weapon.name in names_vals.keys():
+            resetattr = names_vals[current_weapon.name][0]
+            resetamt = names_vals[current_weapon.name][1]
+            resetattr -= resetamt
+            print(f"{self.name} unequipped {current_weapon.name}. They lost its positive effects.")
         self.weapon = weapon
         self.attack = (self.baseattack + weapon.atk)
         self.magic = (self.basemagic + weapon.mag)
@@ -212,6 +219,9 @@ Credits: {str(self.credits)}
         else: 
             needed = (self.tnl - self.xp)
             print(f"{self.name} needs {str(needed)} more XP to level up.\n")
+    def detail_str(self): 
+        detail = f"{self.name} (HP: {self.currenthealth} / {self.maxhealth}, ATK: {self.attack}, MAG: {self.magic}, DEF: {self.defense}, RES: {self.resistance}, SPD: {self.speed})"
+        return detail
 
 party = []
 partynames = []
@@ -410,6 +420,9 @@ SPD: {str(self.speed)}
         before_adjust = getattr(self, attr)
         spell.value_buffer = before_adjust
         setattr(self, attr, (before_adjust + amt))
+    def detail_str(self): 
+        detail = f"{self.name} (HP: {self.currenthealth} / {self.maxhealth}, ATK: {self.attack}, MAG: {self.magic}, DEF: {self.defense}, RES: {self.resistance}, SPD: {self.speed})"
+        return detail
 
 ## Bosses ## 
 #name, weapon, currenthealth, maxhealth, attack, baseattack, defense, magic, basemagic, spells, mp, currentmp, resistance, speed, state
@@ -504,7 +517,7 @@ XP Bounty: {str(self.xpbounty)} XP
             print(f"{self.name.title()} tried to use a spell that they don\'t know.")
         else: 
             if isinstance(spell, magic.Heal):
-                print(f"{self.name.title()} used {spell.name.title()}!")
+                print(f"{self.name.title()} used {spell.name}!")
                 if (self.currenthealth + spell.heals) > (self.maxhealth):
                     self.currenthealth = self.maxhealth
                 else: 
@@ -571,6 +584,9 @@ XP Bounty: {str(self.xpbounty)} XP
         before_adjust = getattr(self, attr)
         spell.value_buffer = before_adjust
         setattr(self, attr, (before_adjust + amt))
+    def detail_str(self): 
+        detail = f"{self.name} (HP: {self.currenthealth} / {self.maxhealth}, ATK: {self.attack}, MAG: {self.magic}, DEF: {self.defense}, RES: {self.resistance}, SPD: {self.speed})"
+        return detail
 
 #name, weapon, currenthealth, maxhealth, attack, baseattack, defense, magic, basemagic, spells, mp, currentmp, resistance, speed, state, bounty, xpbounty
 
