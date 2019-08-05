@@ -12,25 +12,21 @@ Combat is turn-based. During a combat cycle, you can attack, use a spell, use an
 
 ✦Stat Breakdown✦
 
-⋆Current Health: The health that an entity has at that moment.
-⋆Max Health: The maximum health that an entity can have.
-⋆Attack: Base attack + weapon attack. This is how powerful an entity's physical attacks are.
-⋆Defense: Guards against physical attacks or physical spells.
-⋆Magic: Base magic + weapon magic. This is how powerful an entity's attack spells are.
-⋆Resistance: Guards against magic spells.
-⋆MP: The capacity an entity has for spellcasting.
+⋆Current Health: The health that an entity has at that moment.\n
+⋆Max Health: The maximum health that an entity can have.\n
+⋆Attack: Base attack + weapon attack. This is how powerful an entity's physical attacks are.\n
+⋆Defense: Guards against physical attacks or physical spells.\n
+⋆Magic: Base magic + weapon magic. This is how powerful an entity's attack spells are.\n
+⋆Resistance: Guards against magic spells.\n
+⋆MP: The capacity an entity has for spellcasting.\n
 ⋆Speed: How fast an entity is. If an entity's speed is 5 or higher than their opponent's, the entity will attack again.
 
 ✦Spell Attributes✦
 
-⋆Name: The spell's name.
-
-⋆Damage: How much damage the spell will do.
-
-⋆Cost: How much MP the spell costs to use.
-
-⋆Kind: The type of defense the spell is measured against (Defense or Resistance) [M: Magic -- Against RES \\\ P: Physical -- Against DEF].
-
+⋆Name: The spell's name.\n
+⋆Damage: How much damage the spell will do.\n
+⋆Cost: How much MP the spell costs to use.\n
+⋆Kind: The type of defense the spell is measured against (Defense or Resistance) [M: Magic -- Against RES \\\ P: Physical -- Against DEF].\n
 ⋆Affliction: The state that the spell has a chance to set.
 
 ✦Basic Game Info✦
