@@ -1,7 +1,7 @@
 # Text_RPG_3
 3rd iteration of my text RPG.
 
-Tested with Python 3.6.1 and above. Instructions for downloading and installing Python can be found at www.python.org/
+Tested with Python 3.6.1. Compatibility with future versions isn't guaranteed. Instructions for downloading and installing Python can be found at www.python.org/
 
 DISCLAIMER: The game is wildly unbalanced.
 
